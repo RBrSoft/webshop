@@ -1,0 +1,8 @@
+de/RBrSoft/webshop/model/ProductResponse.java
+ de.RBrSoft.webshop.model.ProductResponse
+de/RBrSoft/webshop/repository/ProductRepository.java
+ de.RBrSoft.webshop.repository.ProductRepository
+de/RBrSoft/webshop/WebshopApplication.java
+ de.RBrSoft.webshop.WebshopApplication
+de/RBrSoft/webshop/controller/ProductController.java
+ de.RBrSoft.webshop.controller.ProductController

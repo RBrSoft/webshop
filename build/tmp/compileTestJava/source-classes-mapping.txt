@@ -1,0 +1,2 @@
+de/RBrSoft/webshop/WebshopApplicationTests.java
+ de.RBrSoft.webshop.WebshopApplicationTests
