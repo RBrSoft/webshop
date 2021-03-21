@@ -26,6 +26,27 @@
 			"response": []
 		},
 		{
+			"name": "GET Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/customers/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST Products",
 			"request": {
 				"method": "POST",
