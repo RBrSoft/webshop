@@ -2,7 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+	id 'org.jetbrains.kotlin.jvm' version '1.4.30'
 }
 
 group = 'de.RBrSoft'
@@ -15,6 +15,9 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

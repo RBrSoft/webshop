@@ -45,6 +45,5 @@ public class ProductController {
             @RequestBody ProductCreateRequest request
     ) {
         return productRepository.save(request);
-
     }
 }
