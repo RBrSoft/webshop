@@ -1,44 +1,48 @@
 package de.RBrSoft.webshop.repository;
 
+import de.RBrSoft.webshop.model.ProductCreateRequest;
 import de.RBrSoft.webshop.model.ProductResponse;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductRepository {
 
-    List<ProductResponse> products = Arrays.asList(
-            new ProductResponse(
-                    "1",
-                    "AMD Ryzen 9 5950x",
-                    "Extreme Processor with great performance",
-                    79900,
-                    Arrays.asList(
-                            "AMD",
-                            "Processor")
-            ),
-            new ProductResponse(
-                    "2",
-                    "INTEL CORE i7 10750",
-                    "Extreme Processor with great performance",
-                    99978,
-                    Arrays.asList(
-                            "INTEL",
-                            "Processor")
-            ),
-            new ProductResponse(
-                    "3",
-                    "INTEL CORE i3 10320U",
-                    "Low Budget Processor",
-                    12849,
-                    Arrays.asList(
-                            "INTEL",
-                            "Processor",
-                            "LowBudget")
-            )
-    );
+    List<ProductResponse> products = new ArrayList<>();
+
+    public ProductRepository() {
+        products.add(
+                new ProductResponse(
+                        UUID.randomUUID().toString(),
+                        "AMD Ryzen 9 5950x",
+                        "Extreme Processor with great performance",
+                        79900,
+                        Arrays.asList(
+                                "AMD",
+                                "Processor")
+                ));
+        products.add(
+                new ProductResponse(
+                        UUID.randomUUID().toString(),
+                        "INTEL CORE i7 10750",
+                        "Extreme Processor with great performance",
+                        99978,
+                        Arrays.asList(
+                                "INTEL",
+                                "Processor")
+                ));
+        products.add(
+                new ProductResponse(
+                        UUID.randomUUID().toString(),
+                        "INTEL CORE i3 10320U",
+                        "Low Budget Processor",
+                        12849,
+                        Arrays.asList(
+                                "INTEL",
+                                "Processor",
+                                "LowBudget")
+                ));
+    }
 
     public List<ProductResponse> findAll(String tag) {
 
@@ -49,8 +53,8 @@ public class ProductRepository {
 
             // Modernere Art zu programmieren
             return products.stream()
-                            .filter(p -> lowerCaseTags(p).contains(lowerCaseTagResponse))
-                            .collect(Collectors.toList());
+                    .filter(p -> lowerCaseTags(p).contains(lowerCaseTagResponse))
+                    .collect(Collectors.toList());
 
 /*
             // Alte Variante
@@ -73,4 +77,28 @@ public class ProductRepository {
                 .collect(Collectors.toList());
     }
 
+    public Optional<ProductResponse> findById(String id) {
+        Optional<ProductResponse> product = products.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst();
+        return product;
+    }
+
+    public void deleteById(String id) {
+        this.products = products.stream()
+                .filter(p -> !p.getId().equals(id))
+                .collect(Collectors.toList());
+    }
+
+    public ProductResponse save(ProductCreateRequest request) {
+        ProductResponse response = new ProductResponse(
+                UUID.randomUUID().toString(),
+                request.getName(),
+                request.getDescription(),
+                request.getPriceInCent(),
+                request.getTags()
+        );
+        products.add(response);
+        return response;
+    }
 }
