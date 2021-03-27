@@ -1,11 +1,14 @@
 package de.RBrSoft.webshop.repository
 
+import de.RBrSoft.webshop.model.CustomerResponse
 import de.RBrSoft.webshop.model.OrderCreateRequest
 import de.RBrSoft.webshop.model.OrderResponse
 import de.RBrSoft.webshop.model.OrderStatus
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
 
+@Service
 class OrderRepository {
 
     val orders = mutableListOf<OrderResponse>()
@@ -20,6 +23,10 @@ class OrderRepository {
         )
         orders.add(orderResponse)
         return orderResponse
+    }
+
+    fun findById(orderId: String): OrderResponse? {
+        return orders.find { it.id == orderId }
     }
 
 }

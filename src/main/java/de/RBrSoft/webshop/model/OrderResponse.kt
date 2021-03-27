@@ -17,6 +17,6 @@ enum class OrderStatus {
 data class OrderPositionResponse(
         val id: String,
         val productId: String,
-        val quantity: String
+        val quantity: Long
 )
 
