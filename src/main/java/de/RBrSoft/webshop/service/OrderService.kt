@@ -1,12 +1,14 @@
 package de.RBrSoft.webshop.service
 
+import de.RBrSoft.webshop.exceptions.IdNotFoundException
+import de.RBrSoft.webshop.exceptions.WebshopException
 import de.RBrSoft.webshop.model.*
 import de.RBrSoft.webshop.repository.CustomerRepository
 import de.RBrSoft.webshop.repository.OrderPositionRepository
 import de.RBrSoft.webshop.repository.OrderRepository
 import de.RBrSoft.webshop.repository.ProductRepository
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import java.lang.Exception
 import java.util.*
 
 @Service
@@ -20,7 +22,10 @@ class OrderService(
     fun createOrder(request: OrderCreateRequest): OrderResponse {
 
         val customer: CustomerResponse = customerRepository.findById(request.customerId)
-            ?: throw Exception("Customer not found!")
+            ?: throw WebshopException(
+                message = "Customer with Id: ${request.customerId} not found!",
+                statusCode = HttpStatus.BAD_REQUEST
+            )
 
         return orderRepository.save(request)
     }
@@ -28,10 +33,16 @@ class OrderService(
     fun createNewPositionForOrder(orderId: String, request: OrderCreatePositionRequest): OrderPositionResponse {
 
         orderRepository.findById(orderId)
-            ?: throw Exception("Order not found!")
+            ?: throw IdNotFoundException(
+                message = "Order with Id: $orderId not found!",
+                statusCode = HttpStatus.BAD_REQUEST
+            )
 
         if (productRepository.findById(request.productId).isEmpty)
-            throw Exception("Product not found!")
+            throw WebshopException(
+                message = "Product with Id: ${request.productId} not found!",
+                statusCode = HttpStatus.BAD_REQUEST
+            )
 
         val orderPositionResponse = OrderPositionResponse(
             id = UUID.randomUUID().toString(),
