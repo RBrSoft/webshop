@@ -9,5 +9,5 @@ data class WebshopException(
 
 data class IdNotFoundException(
     override val message: String,
-    val statusCode: HttpStatus
+    val statusCode: HttpStatus = HttpStatus.BAD_REQUEST
 ): Exception(message)

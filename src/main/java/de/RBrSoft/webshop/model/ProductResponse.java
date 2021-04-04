@@ -37,4 +37,5 @@ public class ProductResponse {
     public List<String> getTags() {
         return tags;
     }
+
 }

@@ -92,15 +92,9 @@ public class ProductRepository {
                 .collect(Collectors.toList());
     }
 
-    public ProductResponse save(ProductCreateRequest request) {
-        ProductResponse response = new ProductResponse(
-                UUID.randomUUID().toString(),
-                request.getName(),
-                request.getDescription(),
-                request.getPriceInCent(),
-                request.getTags()
-        );
+    public ProductResponse save(ProductResponse response) {
         products.add(response);
         return response;
     }
+
 }

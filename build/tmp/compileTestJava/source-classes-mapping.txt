@@ -1,2 +1,4 @@
+de/RBrSoft/webshop/service/ShoppingCartServiceTest.java
+ de.RBrSoft.webshop.service.ShoppingCartServiceTest
 de/RBrSoft/webshop/WebshopApplicationTests.java
  de.RBrSoft.webshop.WebshopApplicationTests

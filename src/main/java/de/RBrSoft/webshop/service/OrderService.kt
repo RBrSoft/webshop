@@ -9,6 +9,7 @@ import de.RBrSoft.webshop.repository.OrderRepository
 import de.RBrSoft.webshop.repository.ProductRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -21,13 +22,17 @@ class OrderService(
 
     fun createOrder(request: OrderCreateRequest): OrderResponse {
 
-        val customer: CustomerResponse = customerRepository.findById(request.customerId)
-            ?: throw WebshopException(
-                message = "Customer with Id: ${request.customerId} not found!",
-                statusCode = HttpStatus.BAD_REQUEST
-            )
+        customerRepository.findById(request.customerId)
 
-        return orderRepository.save(request)
+        val orderResponse = OrderResponse(
+            id = UUID.randomUUID().toString(),
+            customerId = request.customerId,
+            orderTime = LocalDateTime.now(),
+            status = OrderStatus.NEW,
+            orderPositions = emptyList()
+        )
+
+        return orderRepository.save(orderResponse)
     }
 
     fun createNewPositionForOrder(orderId: String, request: OrderCreatePositionRequest): OrderPositionResponse {
@@ -46,6 +51,7 @@ class OrderService(
 
         val orderPositionResponse = OrderPositionResponse(
             id = UUID.randomUUID().toString(),
+            orderId = orderId,
             productId = request.productId,
             quantity = request.quantity
         )
@@ -55,6 +61,16 @@ class OrderService(
         return orderPositionResponse
     }
 
+    fun updateOrder(id: String, request: OrderUpdateRequest): OrderResponse {
+        val order: OrderResponse = orderRepository.findById(id)
+            ?: throw IdNotFoundException("Order with Id $id not found")
+
+        val updatedOrder = order.copy(
+            status = request.orderStatus ?: order.status
+        )
+
+        return orderRepository.save(updatedOrder)
+    }
 
 
 }

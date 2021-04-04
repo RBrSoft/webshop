@@ -3,11 +3,9 @@ package de.RBrSoft.webshop.controller
 import de.RBrSoft.webshop.model.OrderCreatePositionRequest
 import de.RBrSoft.webshop.model.OrderCreateRequest
 import de.RBrSoft.webshop.model.OrderResponse
+import de.RBrSoft.webshop.model.OrderUpdateRequest
 import de.RBrSoft.webshop.service.OrderService
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class OrderController(
@@ -29,6 +27,15 @@ class OrderController(
     ) {
 
         orderService.createNewPositionForOrder(orderId, request)
+
+    }
+
+    @PutMapping("/orders/{id}")
+    fun updateOrder(
+        @PathVariable id: String,
+        @RequestBody request: OrderUpdateRequest
+    ) {
+        orderService.updateOrder(id, request)
 
     }
 

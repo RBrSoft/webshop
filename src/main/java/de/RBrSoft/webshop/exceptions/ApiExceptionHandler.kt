@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import java.lang.Exception
+import java.lang.IllegalArgumentException
 import javax.servlet.http.HttpServletRequest
 
 @ControllerAdvice
@@ -17,9 +18,10 @@ class ApiExceptionHandler {
         println(exception)
 
         val ( code, message ) = when (exception) {
-            is IdNotFoundException -> exception.statusCode to exception.message
-            is WebshopException -> exception.statusCode to exception.message
-            else                -> HttpStatus.INTERNAL_SERVER_ERROR to (exception.message ?: "An error occurred")
+            is IdNotFoundException      -> exception.statusCode to exception.message
+            is WebshopException         -> exception.statusCode to exception.message
+            is IllegalArgumentException -> HttpStatus.BAD_REQUEST to (exception.message ?: "Illegal Argument")
+            else                        -> HttpStatus.INTERNAL_SERVER_ERROR to (exception.message ?: "An error occurred")
         }
 
         val errorInfo = ErrorInfo(message, request.requestURI)
